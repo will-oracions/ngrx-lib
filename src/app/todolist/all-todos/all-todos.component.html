@@ -1,0 +1,16 @@
+<h3>Todo list redux</h3>
+<form [formGroup]="todoForm" (ngSubmit)="create(todoForm.value)">
+  <input type="text" placeholder="title" formControlName="title" />
+  <button type="submit">Enregistrer</button>
+</form>
+
+<div>
+  <ul>
+    <li *ngFor="let todo of todos$ | async">
+      <span>{{ todo.title }}</span>
+      <input type="checkbox" disabled="disabled" [(ngModel)]="todo.completed" />
+      <button (click)="edit(todo)">Modifier</button>
+      <button (click)="delete(todo)">Supprimer</button>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,12 @@
+<h2>Mettre à jours</h2>
+<form
+  *ngIf="selectedTodo$ | async; else NoElement"
+  [formGroup]="todoForm"
+  (ngSubmit)="update(todoForm.value)"
+>
+  <input type="text" placeholder="title" formControlName="title" />
+  <input type="checkbox" formControlName="completed" />
+  <button type="submit">Modifier</button>
+</form>
+
+<ng-template #NoElement>Pas de Todo selectionné ! </ng-template>
