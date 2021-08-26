@@ -11,45 +11,46 @@ import { TodoListActions } from './todolist.action';
 export class TodoListEffect {
   create$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<{ type: string; todo: Todo }>(TodoListActions.createLoad),
+      ofType<{ type: string; todo: Todo }>(this.todoListActions.createLoad),
       switchMap((action) => this.todoListService.create(action.todo)),
-      map((todo: Todo) => TodoListActions.createSuccess({ todo })),
-      catchError(() => of(TodoListActions.createError()))
+      map((todo: Todo) => this.todoListActions.createSuccess({ todo })),
+      catchError(() => of(this.todoListActions.createError()))
     )
   );
 
   load$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<{ type: string; todos: Todo[] }>(TodoListActions.initLoad),
+      ofType<{ type: string; todos: Todo[] }>(this.todoListActions.initLoad),
       switchMap((action) => this.todoListService.getAll()),
-      map((todos: Todo[]) => TodoListActions.initSuccess({ todos })),
-      catchError(() => of(TodoListActions.initError()))
+      map((todos: Todo[]) => this.todoListActions.initSuccess({ todos })),
+      catchError(() => of(this.todoListActions.initError()))
     )
   );
 
   edit$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<{ type: string; todo: Todo }>(TodoListActions.editLoad),
+      ofType<{ type: string; todo: Todo }>(this.todoListActions.editLoad),
       switchMap((action) => {
         const { id, ...changes } = action.todo;
         return this.todoListService.edit(changes, id);
       }),
-      map((todo: Todo) => TodoListActions.editSuccess({ todo })),
-      catchError(() => of(TodoListActions.editError()))
+      map((todo: Todo) => this.todoListActions.editSuccess({ todo })),
+      catchError(() => of(this.todoListActions.editError()))
     )
   );
 
   delete$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<{ type: string; id: number }>(TodoListActions.deleteLoad),
+      ofType<{ type: string; id: number }>(this.todoListActions.deleteLoad),
       switchMap((action) => this.todoListService.delete(action.id)),
-      map((id: number) => TodoListActions.deleteSuccess({ id })),
-      catchError(() => of(TodoListActions.deleteError()))
+      map((id: number) => this.todoListActions.deleteSuccess({ id })),
+      catchError(() => of(this.todoListActions.deleteError()))
     )
   );
 
   constructor(
     private actions$: Actions,
-    private todoListService: TodoListService
+    private todoListService: TodoListService,
+    private todoListActions: TodoListActions
   ) {}
 }

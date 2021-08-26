@@ -30,7 +30,8 @@ export class AllTodosComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private todoListActions: TodoListActions
   ) {
     this.todoForm = formBuilder.group({
       title: [''],
@@ -45,7 +46,7 @@ export class AllTodosComponent implements OnInit {
     try {
       const todos = await HandleDispatch.load(
         this.store,
-        TodoListActions.initLoad,
+        this.todoListActions.initLoad,
         selectTodos,
         selectTodosStatus
       ).done();
@@ -76,7 +77,7 @@ export class AllTodosComponent implements OnInit {
     try {
       const saved = await HandleDispatch.load(
         this.store,
-        [TodoListActions.createLoad, { todo: newTodo }],
+        [this.todoListActions.createLoad, { todo: newTodo }],
         selectTodoOperation,
         selectTodosStatus
       ).done();
@@ -88,7 +89,7 @@ export class AllTodosComponent implements OnInit {
   }
 
   edit(todo: Todo): void {
-    this.store.dispatch(TodoListActions.selectTodo({ todo }));
+    this.store.dispatch(this.todoListActions.selectTodo({ todo }));
     this.router.navigateByUrl('/todolist/select');
   }
 
@@ -97,7 +98,7 @@ export class AllTodosComponent implements OnInit {
     try {
       const deleted = await HandleDispatch.load(
         this.store,
-        [TodoListActions.deleteLoad, { id: todo.id }],
+        [this.todoListActions.deleteLoad, { id: todo.id }],
         selectTodoOperation,
         selectTodosStatus
       ).done();

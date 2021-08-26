@@ -28,7 +28,8 @@ export class SelectTodoComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private router: Router,
-    formBuilder: FormBuilder
+    formBuilder: FormBuilder,
+    private todoListActions: TodoListActions
   ) {
     this.selectedTodo$ = this.store.pipe(
       select(selectSelectedTodo),
@@ -57,7 +58,7 @@ export class SelectTodoComponent implements OnInit {
     try {
       const edited = await HandleDispatch.load(
         this.store,
-        [TodoListActions.editLoad, { todo: payload }],
+        [this.todoListActions.editLoad, { todo: payload }],
         selectTodoOperation,
         selectTodosStatus
       ).done();

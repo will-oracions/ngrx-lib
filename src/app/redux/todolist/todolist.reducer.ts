@@ -23,36 +23,38 @@ const initialState: TodoListState = {
   selected: undefined,
 };
 
+const todoListActions = new TodoListActions();
+
 const reducer = createReducer(
   initialState,
-  on(TodoListActions.selectTodo, (state, { todo }) => _selectTodo(state, todo)),
+  on(todoListActions.selectTodo, (state, { todo }) => _selectTodo(state, todo)),
   // Init
-  on(TodoListActions.initLoad, (state) => _loadInit(state)),
-  on(TodoListActions.initSuccess, (state, { todos }) =>
+  on(todoListActions.initLoad, (state) => _loadInit(state)),
+  on(todoListActions.initSuccess, (state, { todos }) =>
     _successInit(state, todos)
   ),
-  on(TodoListActions.initError, (state) => _errorInit(state)),
+  on(todoListActions.initError, (state) => _errorInit(state)),
 
   // Create
-  on(TodoListActions.createLoad, (state, action) => _loadCreate(state)),
-  on(TodoListActions.createSuccess, (state, { todo }) =>
+  on(todoListActions.createLoad, (state, action) => _loadCreate(state)),
+  on(todoListActions.createSuccess, (state, { todo }) =>
     _successCreate(state, todo)
   ),
-  on(TodoListActions.createError, (state, action) => _errorCreate(state)),
+  on(todoListActions.createError, (state, action) => _errorCreate(state)),
 
   // Delete
-  on(TodoListActions.deleteLoad, (state) => _loadDelete(state)),
-  on(TodoListActions.deleteSuccess, (state, { id }) =>
+  on(todoListActions.deleteLoad, (state) => _loadDelete(state)),
+  on(todoListActions.deleteSuccess, (state, { id }) =>
     _successDelete(state, id)
   ),
-  on(TodoListActions.deleteError, (state) => _errorDelete(state)),
+  on(todoListActions.deleteError, (state) => _errorDelete(state)),
 
   // update
-  on(TodoListActions.editLoad, (state) => _loadUpdate(state)),
-  on(TodoListActions.editSuccess, (state, { todo }) =>
+  on(todoListActions.editLoad, (state) => _loadUpdate(state)),
+  on(todoListActions.editSuccess, (state, { todo }) =>
     _successUpdate(state, todo)
   ),
-  on(TodoListActions.editError, (state) => _errorUpdate(state))
+  on(todoListActions.editError, (state) => _errorUpdate(state))
 );
 
 export function TodoListReducer(

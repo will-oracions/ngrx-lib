@@ -1,4 +1,7 @@
-export interface BaseActionType {
+import { createAction, props } from '@ngrx/store';
+import { Todo } from '../models/todo.model';
+
+export interface BaseActionsType {
   LOAD_INIT: string;
   SUCCESS_INIT: string;
   ERROR_INIT: string;
@@ -34,4 +37,48 @@ export function getBaseActions(name: string) {
     SUCCESS_DELETE: `[${name.toLowerCase()}] success delete`,
     ERROR_DELETE: `[${name.toLowerCase()}] error delete`,
   };
+}
+
+export class BaseActions {
+  constructor(private actionsType: BaseActionsType) {}
+  // Init
+  initLoad = createAction(this.actionsType.LOAD_INIT);
+  initSuccess = createAction(
+    this.actionsType.SUCCESS_INIT,
+    props<{ todos: Todo[] }>()
+  );
+  initError = createAction(this.actionsType.ERROR_INIT);
+
+  // Create
+  createLoad = createAction(
+    this.actionsType.LOAD_CREATE,
+    props<{ todo: Todo }>()
+  );
+  createSuccess = createAction(
+    this.actionsType.SUCCESS_CREATE,
+    props<{ todo: Todo }>()
+  );
+  createError = createAction(this.actionsType.ERROR_CREATE);
+
+  // Edit
+  editLoad = createAction(
+    this.actionsType.LOAD_UPDATE,
+    props<{ todo: Todo }>()
+  );
+  editSuccess = createAction(
+    this.actionsType.SUCCESS_UPDATE,
+    props<{ todo: Todo }>()
+  );
+  editError = createAction(this.actionsType.ERROR_UPDATE);
+
+  // Delete
+  deleteLoad = createAction(
+    this.actionsType.LOAD_DELETE,
+    props<{ id?: number }>()
+  );
+  deleteSuccess = createAction(
+    this.actionsType.SUCCESS_DELETE,
+    props<{ id: number }>()
+  );
+  deleteError = createAction(this.actionsType.ERROR_DELETE);
 }
