@@ -36,8 +36,8 @@ export class HandleDispatch {
     this.statusSubscription = null;
     this.dataSubscription = null;
 
-    this.initFunction();
     this._loadAction = () => {};
+    this._selectorProcessStatus = () => {};
 
     // Selectors
     this._selectorData = selectorData;
@@ -46,11 +46,6 @@ export class HandleDispatch {
     // Bind Listeners to store
     this.status$ = this.store.pipe(select(this._selectorProcessStatus));
     this.data$ = this.store.pipe(select(this._selectorData));
-  }
-
-  private initFunction(): void {
-    this._loadAction = () => {};
-    this._selectorProcessStatus = () => {};
   }
 
   /**
@@ -81,7 +76,7 @@ export class HandleDispatch {
 
   /**
    * Dispatch load action and wait while process is running
-   * listen to success or errors status and
+   * listen to success or errors status and then
    * handle resolve or reject
    */
   async done(): Promise<any[]> {

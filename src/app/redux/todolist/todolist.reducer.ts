@@ -1,21 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { TodoListService } from 'src/app/services/todo-list.service';
 import { Todo } from '../../models/todo.model';
-import {
-  actionTodoListInitError,
-  actionTodoListCreateError,
-  actionTodoListInitSuccess,
-  actionTodoListCreateLoad,
-  actionTodoListInitLoad,
-  actionTodoListCreateSuccess,
-  actionTodoListDeleteLoad,
-  actionTodoListDeleteSuccess,
-  actionTodoListDeleteError,
-  actionTodoListUpdateLoad,
-  actionTodoListUpdateSuccess,
-  actionTodoLIstUpdateError,
-  actionTodoListSelectTodo,
-} from './todolist.action';
+import { TodoListActions } from './todolist.action';
 
 export interface TodoListState {
   timestamps?: number;
@@ -40,32 +25,34 @@ const initialState: TodoListState = {
 
 const reducer = createReducer(
   initialState,
-  on(actionTodoListSelectTodo, (state, { todo }) => _selectTodo(state, todo)),
+  on(TodoListActions.selectTodo, (state, { todo }) => _selectTodo(state, todo)),
   // Init
-  on(actionTodoListInitLoad, (state) => _loadInit(state)),
-  on(actionTodoListInitSuccess, (state, { todos }) =>
+  on(TodoListActions.initLoad, (state) => _loadInit(state)),
+  on(TodoListActions.initSuccess, (state, { todos }) =>
     _successInit(state, todos)
   ),
-  on(actionTodoListInitError, (state) => _errorInit(state)),
+  on(TodoListActions.initError, (state) => _errorInit(state)),
 
   // Create
-  on(actionTodoListCreateLoad, (state, action) => _loadCreate(state)),
-  on(actionTodoListCreateSuccess, (state, { todo }) =>
+  on(TodoListActions.createLoad, (state, action) => _loadCreate(state)),
+  on(TodoListActions.createSuccess, (state, { todo }) =>
     _successCreate(state, todo)
   ),
-  on(actionTodoListCreateError, (state, action) => _errorCreate(state)),
+  on(TodoListActions.createError, (state, action) => _errorCreate(state)),
 
   // Delete
-  on(actionTodoListDeleteLoad, (state) => _loadDelete(state)),
-  on(actionTodoListDeleteSuccess, (state, { id }) => _successDelete(state, id)),
-  on(actionTodoListDeleteError, (state) => _errorDelete(state)),
+  on(TodoListActions.deleteLoad, (state) => _loadDelete(state)),
+  on(TodoListActions.deleteSuccess, (state, { id }) =>
+    _successDelete(state, id)
+  ),
+  on(TodoListActions.deleteError, (state) => _errorDelete(state)),
 
   // update
-  on(actionTodoListUpdateLoad, (state) => _loadUpdate(state)),
-  on(actionTodoListUpdateSuccess, (state, { todo }) =>
+  on(TodoListActions.editLoad, (state) => _loadUpdate(state)),
+  on(TodoListActions.editSuccess, (state, { todo }) =>
     _successUpdate(state, todo)
   ),
-  on(actionTodoLIstUpdateError, (state) => _errorUpdate(state))
+  on(TodoListActions.editError, (state) => _errorUpdate(state))
 );
 
 export function TodoListReducer(

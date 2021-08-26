@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '@Redux/core.state';
 import { HandleDispatch } from '@Redux/handle-dispatch';
-import { actionTodoListUpdateLoad } from '@Redux/todolist/todolist.action';
+import { TodoListActions } from '@Redux/todolist/todolist.action';
 import {
   selectSelectedTodo,
   selectTodoOperation,
@@ -57,7 +57,7 @@ export class SelectTodoComponent implements OnInit {
     try {
       const edited = await HandleDispatch.load(
         this.store,
-        [actionTodoListUpdateLoad, { todo: payload }],
+        [TodoListActions.editLoad, { todo: payload }],
         selectTodoOperation,
         selectTodosStatus
       ).done();

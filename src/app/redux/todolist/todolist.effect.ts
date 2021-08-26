@@ -1,62 +1,50 @@
 import { Injectable } from '@angular/core';
 import { TodoListService } from 'src/app/services/todo-list.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {
-  actionTodoListCreateError,
-  actionTodoListCreateSuccess,
-  actionTodoListDeleteError,
-  actionTodoListDeleteLoad,
-  actionTodoListDeleteSuccess,
-  actionTodoListInitError,
-  actionTodoListInitLoad,
-  actionTodoListInitSuccess,
-  actionTodoLIstUpdateError,
-  actionTodoListUpdateLoad,
-  actionTodoListUpdateSuccess,
-  ActionTypes,
-} from './todolist.action';
+
 import { catchError, switchMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Todo } from 'src/app/models/todo.model';
+import { TodoListActions } from './todolist.action';
 
 @Injectable()
 export class TodoListEffect {
   create$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<{ type: string; todo: Todo }>(ActionTypes.LOAD_CREATE),
+      ofType<{ type: string; todo: Todo }>(TodoListActions.createLoad),
       switchMap((action) => this.todoListService.create(action.todo)),
-      map((todo: Todo) => actionTodoListCreateSuccess({ todo })),
-      catchError(() => of(actionTodoListCreateError()))
+      map((todo: Todo) => TodoListActions.createSuccess({ todo })),
+      catchError(() => of(TodoListActions.createError()))
     )
   );
 
   load$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<{ type: string; todos: Todo[] }>(actionTodoListInitLoad),
+      ofType<{ type: string; todos: Todo[] }>(TodoListActions.initLoad),
       switchMap((action) => this.todoListService.getAll()),
-      map((todos: Todo[]) => actionTodoListInitSuccess({ todos })),
-      catchError(() => of(actionTodoListInitError()))
+      map((todos: Todo[]) => TodoListActions.initSuccess({ todos })),
+      catchError(() => of(TodoListActions.initError()))
     )
   );
 
   edit$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<{ type: string; todo: Todo }>(actionTodoListUpdateLoad),
+      ofType<{ type: string; todo: Todo }>(TodoListActions.editLoad),
       switchMap((action) => {
         const { id, ...changes } = action.todo;
         return this.todoListService.edit(changes, id);
       }),
-      map((todo: Todo) => actionTodoListUpdateSuccess({ todo })),
-      catchError(() => of(actionTodoLIstUpdateError()))
+      map((todo: Todo) => TodoListActions.editSuccess({ todo })),
+      catchError(() => of(TodoListActions.editError()))
     )
   );
 
   delete$ = createEffect(() =>
     this.actions$.pipe(
-      ofType<{ type: string; id: number }>(actionTodoListDeleteLoad),
+      ofType<{ type: string; id: number }>(TodoListActions.deleteLoad),
       switchMap((action) => this.todoListService.delete(action.id)),
-      map((id: number) => actionTodoListDeleteSuccess({ id })),
-      catchError(() => of(actionTodoListDeleteError()))
+      map((id: number) => TodoListActions.deleteSuccess({ id })),
+      catchError(() => of(TodoListActions.deleteError()))
     )
   );
 

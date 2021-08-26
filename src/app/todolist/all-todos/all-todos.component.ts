@@ -10,14 +10,10 @@ import { Observable } from 'rxjs';
 
 import { Todo } from 'src/app/models/todo.model';
 import { AppState } from 'src/app/redux/core.state';
-import {
-  actionTodoListCreateLoad,
-  actionTodoListDeleteLoad,
-  actionTodoListInitLoad,
-  actionTodoListSelectTodo,
-} from 'src/app/redux/todolist/todolist.action';
+
 import { HandleDispatch } from '@Redux/handle-dispatch';
 import { Router } from '@angular/router';
+import { TodoListActions } from '@Redux/todolist/todolist.action';
 
 @Component({
   selector: 'app-all-todos',
@@ -49,7 +45,7 @@ export class AllTodosComponent implements OnInit {
     try {
       const todos = await HandleDispatch.load(
         this.store,
-        actionTodoListInitLoad,
+        TodoListActions.initLoad,
         selectTodos,
         selectTodosStatus
       ).done();
@@ -80,7 +76,7 @@ export class AllTodosComponent implements OnInit {
     try {
       const saved = await HandleDispatch.load(
         this.store,
-        [actionTodoListCreateLoad, { todo: newTodo }],
+        [TodoListActions.createLoad, { todo: newTodo }],
         selectTodoOperation,
         selectTodosStatus
       ).done();
@@ -92,7 +88,7 @@ export class AllTodosComponent implements OnInit {
   }
 
   edit(todo: Todo): void {
-    this.store.dispatch(actionTodoListSelectTodo({ todo }));
+    this.store.dispatch(TodoListActions.selectTodo({ todo }));
     this.router.navigateByUrl('/todolist/select');
   }
 
@@ -101,7 +97,7 @@ export class AllTodosComponent implements OnInit {
     try {
       const deleted = await HandleDispatch.load(
         this.store,
-        [actionTodoListDeleteLoad, { id: todo.id }],
+        [TodoListActions.deleteLoad, { id: todo.id }],
         selectTodoOperation,
         selectTodosStatus
       ).done();
