@@ -54,19 +54,6 @@ export class AllTodosComponent implements OnInit {
     } catch (error) {
       console.log('Error: ', error);
     }
-
-    this.initTodos();
-    // this.todoloading$.subscribe((loading) => (this.loading = loading));
-  }
-
-  private initTodos(): void {
-    // this.todosLoaded$.subscribe((loaded: boolean) => {
-    //   // console.log('Loaded: ', loaded);
-    //   if (!loaded) {
-    //     // console.log('Aller Hoop, on récupère :)');
-    // this.store.dispatch(actionTodoListInitLoad());
-    //   }
-    // });
   }
 
   async create(data: any): Promise<void> {
