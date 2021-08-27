@@ -77,7 +77,7 @@ export class AllTodosComponent implements OnInit {
     try {
       const saved = await HandleDispatch.load(
         this.store,
-        [this.todoListActions.createLoad, { todo: newTodo }],
+        [this.todoListActions.createLoad, { single: newTodo }],
         selectTodoOperation,
         selectTodosStatus
       ).done();

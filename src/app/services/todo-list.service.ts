@@ -4,14 +4,17 @@ import { environment } from 'src/environments/environment';
 import { Todo } from '../models/todo.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BaseHttpService } from './base-http.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TodoListService {
+export class TodoListService extends BaseHttpService<Todo> {
   rootUrl = `${environment.api}/todos`;
 
-  constructor(private http: HttpClient) {}
+  constructor(http: HttpClient) {
+    super(http);
+  }
 
   create(todo: Todo): Observable<Todo> {
     console.log(todo);

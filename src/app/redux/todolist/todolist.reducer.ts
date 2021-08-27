@@ -30,15 +30,15 @@ const reducer = createReducer(
   on(todoListActions.selectTodo, (state, { todo }) => _selectTodo(state, todo)),
   // Init
   on(todoListActions.initLoad, (state) => _loadInit(state)),
-  on(todoListActions.initSuccess, (state, { todos }) =>
-    _successInit(state, todos)
+  on(todoListActions.initSuccess, (state, { list }) =>
+    _successInit(state, list)
   ),
   on(todoListActions.initError, (state) => _errorInit(state)),
 
   // Create
   on(todoListActions.createLoad, (state, action) => _loadCreate(state)),
-  on(todoListActions.createSuccess, (state, { todo }) =>
-    _successCreate(state, todo)
+  on(todoListActions.createSuccess, (state, { single }) =>
+    _successCreate(state, single)
   ),
   on(todoListActions.createError, (state, action) => _errorCreate(state)),
 
@@ -51,8 +51,8 @@ const reducer = createReducer(
 
   // update
   on(todoListActions.editLoad, (state) => _loadUpdate(state)),
-  on(todoListActions.editSuccess, (state, { todo }) =>
-    _successUpdate(state, todo)
+  on(todoListActions.editSuccess, (state, { single }) =>
+    _successUpdate(state, single)
   ),
   on(todoListActions.editError, (state) => _errorUpdate(state))
 );

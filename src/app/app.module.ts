@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { TodoListActions } from '@Redux/todolist/todolist.action';
 import { TodoListEffect } from '@Redux/todolist/todolist.effect';
 import { environment } from 'src/environments/environment';
 
@@ -26,7 +27,7 @@ import { reducers } from './redux/core.state';
     }),
     EffectsModule.forRoot([TodoListEffect]),
   ],
-  providers: [],
+  providers: [TodoListActions],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

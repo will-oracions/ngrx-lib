@@ -1,5 +1,4 @@
 import { createAction, props } from '@ngrx/store';
-import { Todo } from '../models/todo.model';
 
 export interface BaseActionsType {
   LOAD_INIT: string;
@@ -39,46 +38,73 @@ export function getBaseActions(name: string) {
   };
 }
 
-export class BaseActions {
-  constructor(private actionsType: BaseActionsType) {}
+export class BaseActions<TModel> {
+  constructor(actionsType: BaseActionsType) {
+    // Init
+    this.initLoad = createAction(actionsType.LOAD_INIT);
+    this.initSuccess = createAction(
+      actionsType.SUCCESS_INIT,
+      props<{ list: TModel[] }>()
+    );
+    this.initError = createAction(actionsType.ERROR_INIT);
+
+    //
+    //
+    // Create
+    this.createLoad = createAction(
+      actionsType.LOAD_CREATE,
+      props<{ single: TModel }>()
+    );
+    this.createSuccess = createAction(
+      actionsType.SUCCESS_CREATE,
+      props<{ single: TModel }>()
+    );
+    this.createError = createAction(actionsType.ERROR_CREATE);
+
+    //
+    //
+    // Edit
+    this.editLoad = createAction(
+      actionsType.LOAD_UPDATE,
+      props<{ single: TModel }>()
+    );
+    this.editSuccess = createAction(
+      actionsType.SUCCESS_UPDATE,
+      props<{ single: TModel }>()
+    );
+    this.editError = createAction(actionsType.ERROR_UPDATE);
+
+    //
+    //
+    // Delete
+    this.deleteLoad = createAction(
+      actionsType.LOAD_DELETE,
+      props<{ id?: number }>()
+    );
+    this.deleteSuccess = createAction(
+      actionsType.SUCCESS_DELETE,
+      props<{ id: number }>()
+    );
+    this.deleteError = createAction(actionsType.ERROR_DELETE);
+  }
+
   // Init
-  initLoad = createAction(this.actionsType.LOAD_INIT);
-  initSuccess = createAction(
-    this.actionsType.SUCCESS_INIT,
-    props<{ todos: Todo[] }>()
-  );
-  initError = createAction(this.actionsType.ERROR_INIT);
+  public initLoad: any;
+  public initSuccess: any;
+  public initError: any;
 
   // Create
-  createLoad = createAction(
-    this.actionsType.LOAD_CREATE,
-    props<{ todo: Todo }>()
-  );
-  createSuccess = createAction(
-    this.actionsType.SUCCESS_CREATE,
-    props<{ todo: Todo }>()
-  );
-  createError = createAction(this.actionsType.ERROR_CREATE);
+  public createLoad: any;
+  public createSuccess: any;
+  public createError: any;
 
   // Edit
-  editLoad = createAction(
-    this.actionsType.LOAD_UPDATE,
-    props<{ todo: Todo }>()
-  );
-  editSuccess = createAction(
-    this.actionsType.SUCCESS_UPDATE,
-    props<{ todo: Todo }>()
-  );
-  editError = createAction(this.actionsType.ERROR_UPDATE);
+  public editLoad: any;
+  public editSuccess: any;
+  public editError: any;
 
   // Delete
-  deleteLoad = createAction(
-    this.actionsType.LOAD_DELETE,
-    props<{ id?: number }>()
-  );
-  deleteSuccess = createAction(
-    this.actionsType.SUCCESS_DELETE,
-    props<{ id: number }>()
-  );
-  deleteError = createAction(this.actionsType.ERROR_DELETE);
+  public deleteLoad: any;
+  public deleteSuccess: any;
+  public deleteError: any;
 }

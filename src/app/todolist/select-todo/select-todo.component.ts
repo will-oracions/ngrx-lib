@@ -58,7 +58,7 @@ export class SelectTodoComponent implements OnInit {
     try {
       const edited = await HandleDispatch.load(
         this.store,
-        [this.todoListActions.editLoad, { todo: payload }],
+        [this.todoListActions.editLoad, { single: payload }],
         selectTodoOperation,
         selectTodosStatus
       ).done();

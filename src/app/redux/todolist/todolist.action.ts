@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { createAction, props } from '@ngrx/store';
 import {
   BaseActions,
@@ -15,7 +16,8 @@ const actionTypes: Types = {
   SELECT: '[todolist]  select',
 };
 
-export class TodoListActions extends BaseActions {
+@Injectable()
+export class TodoListActions extends BaseActions<Todo> {
   private actionTypes: Types = actionTypes;
 
   selectTodo = createAction(this.actionTypes.SELECT, props<{ todo: Todo }>());
