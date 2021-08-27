@@ -3,8 +3,8 @@ import { Observable, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
 
 interface DispathProcessStatus {
-  loading: boolean;
-  success: boolean;
+  Loading: boolean;
+  Success: boolean;
 }
 
 /**
@@ -105,7 +105,7 @@ export class HandleDispatch {
         .pipe(skip(1))
         .subscribe((status: DispathProcessStatus) => {
           // console.log('Loading change...', status);
-          if (!status.success) {
+          if (!status.Success) {
             reject(new Error('Error ! Ouupss'));
             this.unsubscribe();
           }

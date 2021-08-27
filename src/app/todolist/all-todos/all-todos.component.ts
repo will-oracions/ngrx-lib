@@ -98,7 +98,7 @@ export class AllTodosComponent implements OnInit {
     try {
       const deleted = await HandleDispatch.load(
         this.store,
-        [this.todoListActions.deleteLoad, { id: todo.id }],
+        [this.todoListActions.deleteLoad, { id: todo.Id }],
         selectTodoOperation,
         selectTodosStatus
       ).done();
