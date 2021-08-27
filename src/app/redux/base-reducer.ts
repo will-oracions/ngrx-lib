@@ -25,13 +25,13 @@ export class BaseReducer {
   });
   _successUpdate = (state: BaseState, single: BaseModel) => ({
     ...state,
-    status: { loading: false, success: true },
-    list: state.List.map((t: BaseModel) => (t.Id === single.Id ? single : t)),
-    operation: { edited: single },
+    Status: { Loading: false, Success: true },
+    List: state.List.map((t: BaseModel) => (t.id === single.id ? single : t)),
+    Operation: { edited: single },
   });
   _errorUpdate = (state: BaseState) => ({
     ...state,
-    status: { loading: false, success: false },
+    Status: { Loading: false, Success: false },
   });
 
   // Delete
@@ -42,7 +42,7 @@ export class BaseReducer {
   _successDelete = (state: BaseState, id: number): BaseState => ({
     ...state,
     Status: { Loading: false, Success: true },
-    List: state.List.filter((single) => single.Id !== id),
+    List: state.List.filter((single) => single.id !== id),
     Operation: { deleted: id },
   });
   _errorDelete = (state: BaseState): BaseState => ({
@@ -53,13 +53,13 @@ export class BaseReducer {
   // Create
   _loadCreate = (state: BaseState) => ({
     ...state,
-    status: { loading: true, success: false },
+    Status: { Loading: true, Success: false },
   });
   _successCreate = (state: BaseState, single: BaseModel) => ({
     ...state,
-    status: { loading: false, success: true },
+    Status: { Loading: false, Success: true },
     List: [...state.List, single],
-    operation: { created: single },
+    Operation: { created: single },
   });
   _errorCreate = (state: BaseState) => ({
     ...state,
@@ -151,7 +151,7 @@ export class BaseReducer {
     const r = this.reducerBaseProcess.map((process: any) =>
       on(process?.action, process?.onFunc)
     );
-    console.log('FFFFFF: ', r);
+    // console.log('FFFFFF: ', r);
     return r;
   }
 }

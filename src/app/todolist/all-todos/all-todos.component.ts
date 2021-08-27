@@ -50,7 +50,7 @@ export class AllTodosComponent implements OnInit {
         selectTodos,
         selectTodosStatus
       ).done();
-      console.log('My request: ', todos);
+      // console.log('My request: ', todos);
     } catch (error) {
       console.log('Error: ', error);
     }
@@ -71,7 +71,7 @@ export class AllTodosComponent implements OnInit {
 
   async create(data: any): Promise<void> {
     //
-    console.log(data);
+    // console.log(data);
     const newTodo = new Todo(data.title, data.completed);
     // this.store.dispatch(actionTodoListCreateLoad({ todo: newTodo }));
     try {
@@ -98,7 +98,7 @@ export class AllTodosComponent implements OnInit {
     try {
       const deleted = await HandleDispatch.load(
         this.store,
-        [this.todoListActions.deleteLoad, { id: todo.Id }],
+        [this.todoListActions.deleteLoad, { id: todo.id }],
         selectTodoOperation,
         selectTodosStatus
       ).done();
