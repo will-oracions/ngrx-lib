@@ -25,7 +25,14 @@ export class BaseEffect<TModel> {
       actions$.pipe(
         ofType<{ type: string; list: TModel[] }>(modelActions.initLoad),
         switchMap((action) => modelService.getAll()),
-        map((list: TModel[]) => modelActions.initSuccess({ list })),
+        map((list: TModel[]) =>
+          modelActions.initSuccess({
+            list,
+            timestamps: this.getTimestamps(
+              modelService.CACHE_EXPIRATION_MIN_DELAY
+            ),
+          })
+        ),
         catchError(() => of(modelActions.initError()))
       )
     );
@@ -58,4 +65,10 @@ export class BaseEffect<TModel> {
   public load$: any;
   public edit$: any;
   public delete$: any;
+
+  private getTimestamps(minDelay: number): number {
+    const d = new Date(new Date().getTime() + minDelay * 60000);
+    // console.log('Timestamps delay: ', d.getTime());
+    return d.getTime();
+  }
 }

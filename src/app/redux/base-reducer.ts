@@ -71,10 +71,15 @@ export class BaseReducer {
     ...state,
     Status: { Loading: true, Success: false },
   });
-  _successInit = (state: BaseState, data: BaseModel[]): BaseState => ({
+  _successInit = (
+    state: BaseState,
+    data: BaseModel[],
+    timestamps: number
+  ): BaseState => ({
     ...state,
     Status: { Loading: false, Success: true },
     List: data,
+    Timestamps: timestamps,
   });
   _errorInit = (state: BaseState): BaseState => ({
     ...state,
@@ -92,8 +97,10 @@ export class BaseReducer {
       },
       {
         action: modelActions.initSuccess,
-        onFunc: (state: BaseState, payload: { list: BaseModel[] }) =>
-          this._successInit(state, payload.list),
+        onFunc: (
+          state: BaseState,
+          payload: { list: BaseModel[]; timestamps: number }
+        ) => this._successInit(state, payload.list, payload.timestamps),
       },
       {
         action: modelActions.initError,

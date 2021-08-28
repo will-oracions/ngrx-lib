@@ -1,4 +1,5 @@
 import { createSelector } from '@ngrx/store';
+import { TodoListService } from 'src/app/services/todo-list.service';
 
 import { AppState } from '../core.state';
 import { TodoListState } from './todolist.reducer';
@@ -28,6 +29,11 @@ export const selectTodoOperation = createSelector(
 export const selectTodoSelected = createSelector(
   selectTodoListState$,
   (state: TodoListState) => state.Selected
+);
+
+export const selectTimestamps = createSelector(
+  selectTodoListState$,
+  (state: TodoListState) => state.Timestamps
 );
 
 // export const selectTodosLoaded = createSelector(

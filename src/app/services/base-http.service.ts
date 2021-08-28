@@ -9,6 +9,8 @@ import { map } from 'rxjs/operators';
 export class BaseHttpService<TModel> {
   r = `environment.api/TModels`;
 
+  public CACHE_EXPIRATION_MIN_DELAY = 1;
+
   constructor(protected http: HttpClient) {}
 
   create(TModel: TModel): Observable<TModel> {

@@ -5,6 +5,7 @@ import {
   selectTodoOperation,
   selectTodos,
   selectTodosStatus,
+  selectTimestamps,
 } from '@Redux/todolist/todolist.selector';
 import { Observable } from 'rxjs';
 
@@ -48,8 +49,9 @@ export class AllTodosComponent implements OnInit {
         this.store,
         this.todoListActions.initLoad,
         selectTodos,
-        selectTodosStatus
-      ).done();
+        selectTodosStatus,
+        selectTimestamps
+      ).done(true);
       // console.log('My request: ', todos);
     } catch (error) {
       console.log('Error: ', error);

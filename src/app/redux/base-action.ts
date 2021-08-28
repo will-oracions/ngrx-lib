@@ -44,7 +44,7 @@ export class BaseActions<TModel> {
     this.initLoad = createAction(actionsType.LOAD_INIT);
     this.initSuccess = createAction(
       actionsType.SUCCESS_INIT,
-      props<{ list: TModel[] }>()
+      props<{ list: TModel[]; timestamps: number }>()
     );
     this.initError = createAction(actionsType.ERROR_INIT);
 
