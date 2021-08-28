@@ -5,11 +5,8 @@ import { select, Store } from '@ngrx/store';
 import { AppState } from '@Redux/core.state';
 import { HandleDispatch } from '@Redux/handle-dispatch';
 import { TodoListActions } from '@Redux/todolist/todolist.action';
-import {
-  selectSelectedTodo,
-  selectTodoOperation,
-  selectTodosStatus,
-} from '@Redux/todolist/todolist.selector';
+import { TodoListSelectors } from '@Redux/todolist/todolist.selector';
+
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Todo } from 'src/app/models/todo.model';
@@ -29,10 +26,11 @@ export class SelectTodoComponent implements OnInit {
     private store: Store<AppState>,
     private router: Router,
     formBuilder: FormBuilder,
-    private todoListActions: TodoListActions
+    private todoListActions: TodoListActions,
+    private todoListSelectors: TodoListSelectors
   ) {
     this.selectedTodo$ = this.store.pipe(
-      select(selectSelectedTodo),
+      select(this.todoListSelectors.selectTodoSelected),
       tap((s: Todo | undefined) => (this.selectedTodo = s))
     );
 
@@ -59,8 +57,8 @@ export class SelectTodoComponent implements OnInit {
       const edited = await HandleDispatch.load(
         this.store,
         [this.todoListActions.editLoad, { single: payload }],
-        selectTodoOperation,
-        selectTodosStatus
+        this.todoListSelectors.selectOperation,
+        this.todoListSelectors.selectStatus
       ).done();
       console.log('Edited: ', edited);
       this.router.navigateByUrl('/todolist');

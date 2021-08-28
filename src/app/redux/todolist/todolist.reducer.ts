@@ -4,7 +4,7 @@ import { Todo } from '../../models/todo.model';
 import { TodoListActions } from './todolist.action';
 
 export interface TodoListState extends BaseState {
-  Timestamps?: number;
+  Timestamp?: number;
   List: Todo[];
   Status: {
     Loading: boolean;
@@ -23,7 +23,7 @@ const _selectTodo = (state: TodoListState, todo: Todo): TodoListState => ({
 
 export class TodoReducer extends BaseReducer {
   initialState: TodoListState = {
-    Timestamps: undefined,
+    Timestamp: undefined,
     List: [],
     Status: {
       Loading: false,

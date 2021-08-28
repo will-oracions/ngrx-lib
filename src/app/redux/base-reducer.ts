@@ -3,7 +3,7 @@ import { BaseActions } from './base-action';
 import { BaseModel } from './base-model';
 
 export interface BaseState {
-  Timestamps?: number;
+  Timestamp?: number;
   List: BaseModel[];
   Status: {
     Loading: boolean;
@@ -74,12 +74,12 @@ export class BaseReducer {
   _successInit = (
     state: BaseState,
     data: BaseModel[],
-    timestamps: number
+    timestamp: number
   ): BaseState => ({
     ...state,
     Status: { Loading: false, Success: true },
     List: data,
-    Timestamps: timestamps,
+    Timestamp: timestamp,
   });
   _errorInit = (state: BaseState): BaseState => ({
     ...state,

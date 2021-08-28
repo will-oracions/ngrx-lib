@@ -113,14 +113,14 @@ export class HandleDispatch {
             inCache = now.getTime() < timestamp;
             // console.log('Now: ', now.getTime());
             // console.log('Timestamps: ', timestamp);
-            console.log('Cache expired: ', !inCache);
+            // console.log('Cache expired: ', !inCache);
           }
         });
       if (inCache) {
         return;
       }
     }
-    console.log('Get from API !!!!!!!');
+    // console.log('Get from API !!!!!!!');
     return new Promise((resolve, reject) => {
       // console.log('Exécution: ');
       // console.log(typeof this._loadAction);

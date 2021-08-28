@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import {
-  selectTodoOperation,
-  selectTodos,
-  selectTodosStatus,
-  selectTimestamps,
-} from '@Redux/todolist/todolist.selector';
+
 import { Observable } from 'rxjs';
 
 import { Todo } from 'src/app/models/todo.model';
@@ -15,6 +10,7 @@ import { AppState } from 'src/app/redux/core.state';
 import { HandleDispatch } from '@Redux/handle-dispatch';
 import { Router } from '@angular/router';
 import { TodoListActions } from '@Redux/todolist/todolist.action';
+import { TodoListSelectors } from '@Redux/todolist/todolist.selector';
 
 @Component({
   selector: 'app-all-todos',
@@ -32,7 +28,8 @@ export class AllTodosComponent implements OnInit {
     private store: Store<AppState>,
     formBuilder: FormBuilder,
     private router: Router,
-    private todoListActions: TodoListActions
+    private todoListActions: TodoListActions,
+    private todoListSelector: TodoListSelectors
   ) {
     this.todoForm = formBuilder.group({
       title: [''],
@@ -40,7 +37,7 @@ export class AllTodosComponent implements OnInit {
     });
     this.loading = false;
 
-    this.todos$ = this.store.pipe(select(selectTodos));
+    this.todos$ = this.store.pipe(select(this.todoListSelector.selectList));
   }
 
   async ngOnInit(): Promise<void> {
@@ -48,9 +45,9 @@ export class AllTodosComponent implements OnInit {
       const todos = await HandleDispatch.load(
         this.store,
         this.todoListActions.initLoad,
-        selectTodos,
-        selectTodosStatus,
-        selectTimestamps
+        this.todoListSelector.selectList,
+        this.todoListSelector.selectStatus,
+        this.todoListSelector.selectTimestamp
       ).done(true);
       // console.log('My request: ', todos);
     } catch (error) {
@@ -67,10 +64,10 @@ export class AllTodosComponent implements OnInit {
       const saved = await HandleDispatch.load(
         this.store,
         [this.todoListActions.createLoad, { single: newTodo }],
-        selectTodoOperation,
-        selectTodosStatus
+        this.todoListSelector.selectOperation,
+        this.todoListSelector.selectStatus
       ).done();
-      console.log('Saved: ', saved);
+      // console.log('Saved: ', saved);
     } catch (error) {
       console.log('Error while creating !');
     }
@@ -88,10 +85,10 @@ export class AllTodosComponent implements OnInit {
       const deleted = await HandleDispatch.load(
         this.store,
         [this.todoListActions.deleteLoad, { id: todo.id }],
-        selectTodoOperation,
-        selectTodosStatus
+        this.todoListSelector.selectOperation,
+        this.todoListSelector.selectStatus
       ).done();
-      console.log('Delete: ', deleted);
+      // console.log('Delete: ', deleted);
     } catch (error) {
       console.log('Error ocurred while delete');
     }

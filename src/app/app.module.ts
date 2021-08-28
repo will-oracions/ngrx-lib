@@ -7,6 +7,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TodoListActions } from '@Redux/todolist/todolist.action';
 import { TodoListEffect } from '@Redux/todolist/todolist.effect';
+import { TodoListSelectors } from '@Redux/todolist/todolist.selector';
 import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -27,7 +28,7 @@ import { reducers } from './redux/core.state';
     }),
     EffectsModule.forRoot([TodoListEffect]),
   ],
-  providers: [TodoListActions],
+  providers: [TodoListActions, TodoListSelectors],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
