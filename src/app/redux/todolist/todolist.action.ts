@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { createAction, props } from '@ngrx/store';
 import {
-  BaseActions,
   BaseActionsType,
+  BaseActions,
   getBaseActions,
 } from '@Redux/base-action';
 import { Todo } from 'src/app/models/todo.model';
